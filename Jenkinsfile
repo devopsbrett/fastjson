@@ -19,4 +19,9 @@ node {
     }
     stash 'build'
   }
+
+  stage('create beanstalk artifact') {
+    sh("mkdir -p beanstalk && rm -Rf beanstalk/* && rm -Rf fastjson-${GIT_COMMIT}.zip && mv target/*.jar beanstalk/")
+    zip archive: true, dir: 'beanstalk', glob: '*', zipFile: "fastjson-${GIT_COMMIT}.zip"
+  }
 }
